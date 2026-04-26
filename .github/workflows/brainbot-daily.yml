@@ -1,0 +1,29 @@
+name: MyBrainBot Daily Summary
+
+on:
+  schedule:
+    - cron: '30 6 * * *'   # Every day at 7:30 AM Casablanca time (UTC+1)
+  workflow_dispatch:
+
+jobs:
+  send-daily-summary:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests groq
+
+      - name: Run MyBrainBot Daily Summary
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BRAINBOT_TELEGRAM_TOKEN: ${{ secrets.BRAINBOT_TELEGRAM_TOKEN }}
+          BRAINBOT_CHAT_ID: ${{ secrets.BRAINBOT_CHAT_ID }}
+        run: python brainbot.py daily
