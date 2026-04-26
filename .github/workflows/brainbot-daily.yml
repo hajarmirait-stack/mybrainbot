@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests groq
+        run: pip install groq requests feedparser
 
       - name: Run MyBrainBot Daily Summary
         env:
